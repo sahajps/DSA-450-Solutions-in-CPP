@@ -1,46 +1,28 @@
 class Solution{
-public:
-	void merge(int arr1[], int arr2[], int n, int m) {
-	    int i=0,j=0,iput=0,jput=0;
-	    queue<int> q;
-	    while(i<n and j<m){
-	        if(arr1[i]<=arr2[j]){
-	            q.push(arr1[i]);
-	            i++;
-	        }
-	        else{
-	            q.push(arr2[j]);
-	            j++;
-	        }
-	        while(iput<i and !q.empty()){
-	            arr1[iput]=q.front();
-	            q.pop();
-	            iput++;
-	        }
-	    }
-        while(i<n){
-            q.push(arr1[i]);
-            i++;
-            while(iput<i and !q.empty()){
-	            arr1[iput]=q.front();
-	            q.pop();
-	            iput++;
-	        }
-	        while(iput==n and jput<j and !q.empty()){
-	            arr2[jput]=q.front();
-	            q.pop();
-	            jput++;
-	        }
+    public:
+    // arr: input array
+    // n: size of array
+    //Function to find the sum of contiguous subarray with maximum sum.
+    long long maxSubarraySum(int arr[], int n){
+        
+        vector<long long> kad(n,0);
+        if(arr[0]>0)kad[0]=arr[0];
+        else kad[0]=0;
+        long long maxi=kad[0];
+        for(int i=1;i<n;i++){
+            if(kad[i-1]+arr[i]>0){
+                kad[i]=kad[i-1]+arr[i];
+                maxi=max(maxi,kad[i]);
+            }
         }
-	    while(j<m){
-	        q.push(arr2[j]);
-	        j++;
-	        while(jput<j and !q.empty()){
-	            arr2[jput]=q.front();
-	            q.pop();
-	            jput++;
-	        }
-	    }
-	    
-	}
+        if(maxi==0){
+            int maxii=INT_MIN;
+            for(int i=0;i<n;i++){
+                maxii=max(maxii,arr[i]);
+            }
+            return maxii;
+        }
+        //maxi=maxii;
+       return maxi; 
+    }
 };
