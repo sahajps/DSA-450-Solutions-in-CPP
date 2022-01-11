@@ -1,22 +1,23 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& a) {
-        int n=a.size(),tmp=n-1,mov,flag=0;
+        int n=a.size(),tmp,mov,flag=0,maxi;
         for(int i=n-2;i>=0;i--){
+            maxi=INT_MAX;
             for(int j=i+1;j<n;j++){
-                if(a[j]>=a[i]){
-                    if(a[j]<=a[tmp]){
+                if(a[j]>a[i]){
+                    if(a[j]<maxi){
                         tmp=j;
+                        maxi=a[j];
                         flag=1;
                     }
                 }
             }
             if(!flag) continue;
-            mov=a[tmp];
-            for(int k=tmp;k>i;k--){
-                a[k]=a[k-1];
-            }
-            a[i]=mov;
+            mov=a[i];
+            a[i]=a[tmp];
+            a[tmp]=mov;
+            sort(a.begin()+i+1,a.end());
             return;
         }
         sort(a.begin(),a.end());
