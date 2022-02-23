@@ -1,22 +1,24 @@
 class Solution{
   public:
-    int minJumps(int a[], int n){
-        vector<int> ans(n,INT_MAX);
-        ans[0]=0;
-        for(int i=0;i<n;i++){
-            if(ans[i]==INT_MAX){
-                return -1;
-            }
-            if(a[i]==0){
-                continue;
-            }
-            for(int j=i+1;j<=a[i]+i and j<n;j++){
-                ans[j]=min(ans[j],ans[i]+1);
-            }
+    int minJumps(int nm[], int n){
+        if(nm[0]==0){
+            if(n==1) return 0;
+            return -1;
         }
-        //for(auto i:ans){
-          //  cout<<i<<" ";
-        //}
-        return ans[n-1];
+        vector<int> cnt(n,0);
+      
+        int mini;
+        for(int i=1;i<n;i++){
+            mini=INT_MAX;
+            for(int j=i-1;j>=0;j--){
+                if(j+nm[j]>=i)
+                    mini=min(mini,cnt[j]+1);
+            }
+            if(mini==INT_MAX) return -1;
+            //cout<<mini<<endl;
+            cnt[i]=mini;
+        }
+        return cnt[n-1];
+        
     }
 };
